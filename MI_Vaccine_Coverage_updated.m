@@ -179,6 +179,18 @@ clear CountySlice Slice
 % exportgraphics(f,file_str);
 
 figure;
+bar(weeks,doses.week/1000,'stacked');
+grid on;
+legend(doses.type,'Location','Best');
+% ylim([0 100]);
+title('Michigan Doses vs Week');
+xlabel('Date');
+ylabel('Thousands of Doses');
+f = gcf;
+file_str = sprintf('Michigan_Weekly_Doses_%s.png',weeks(end));
+exportgraphics(f,file_str);
+
+figure;
 plot(weeks,doses.week_accum_pct(:,1),'b- .');
 hold on;
 plot(weeks,doses.week_accum_pct(:,2),'m- .');
@@ -205,6 +217,18 @@ for c = 1:numSelectedCounties
 %     f = gcf;
 %     file_str = sprintf('%s_County_Weekly_Doses_%s.png',selected_counties(c),weeks(end));
 %     exportgraphics(f,file_str);
+
+    figure;
+    bar(weeks,doses.week_county(:,:,c),'stacked');
+    grid on;
+    legend(doses.type,'Location','Best');
+    title_str = sprintf('%s County Doses vs Week',selected_counties(c));
+    title(title_str);
+    xlabel('Date');
+    ylabel('Doses');
+    f = gcf;
+    file_str = sprintf('%s_County_Weekly_Doses_%s.png',selected_counties(c),weeks(end));
+    exportgraphics(f,file_str);
 
     figure;
     plot(weeks,squeeze(doses.week_county_accum_pct(:,1,c)),'b- .');
